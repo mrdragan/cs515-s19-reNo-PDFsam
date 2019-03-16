@@ -58,6 +58,10 @@ public final class ConversionUtils {
         }
         return Collections.emptySet();
     }
+    
+    public static Set<PageRange> toPageRangeSet(int selection) throws ConversionException {
+        return toPageRangeSet(Integer.toString(selection));
+    }
 
     private static PageRange toPageRange(String value) throws ConversionException {
         String[] limits = splitAndTrim(value, "-");
