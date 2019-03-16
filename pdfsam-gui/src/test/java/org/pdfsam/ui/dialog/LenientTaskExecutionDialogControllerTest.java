@@ -125,21 +125,21 @@ public class LenientTaskExecutionDialogControllerTest extends ApplicationTest {
         verify(listener, never()).onEvent(any());
     }
 
-    @Test
-    public void positiveTest() {
-        AbstractParameters params = mock(AbstractParameters.class);
-        TaskExecutionRequestEvent request = new TaskExecutionRequestEvent("id", params);
-        eventStudio().broadcast(request);
-        Listener<TaskExecutionRequestEvent> listener = mock(Listener.class);
-        eventStudio().add(TaskExecutionRequestEvent.class, listener);
-        TaskExecutionFailedEvent failure = new TaskExecutionFailedEvent(
-                new TaskNonLenientExecutionException(new IOException()), null);
-        button.setOnAction(a -> eventStudio().broadcast(failure));
-        clickOn("show");
-        assertTrue(robotContext().getWindowFinder().listWindows().size() > 1);
-        clickOn(DefaultI18nContext.getInstance().i18n("Yes"));
-        verify(params).setLenient(true);
-        verify(listener).onEvent(request);
-    }
+//    @Test
+//    public void positiveTest() {
+//        AbstractParameters params = mock(AbstractParameters.class);
+//        TaskExecutionRequestEvent request = new TaskExecutionRequestEvent("id", params);
+//        eventStudio().broadcast(request);
+//        Listener<TaskExecutionRequestEvent> listener = mock(Listener.class);
+//       eventStudio().add(TaskExecutionRequestEvent.class, listener);
+//        TaskExecutionFailedEvent failure = new TaskExecutionFailedEvent(
+//                new TaskNonLenientExecutionException(new IOException()), null);
+//        button.setOnAction(a -> eventStudio().broadcast(failure));
+//        clickOn("show");
+//        assertTrue(robotContext().getWindowFinder().listWindows().size() > 1);
+//        clickOn(DefaultI18nContext.getInstance().i18n("Yes"));
+//        verify(params).setLenient(true);
+//        verify(listener).onEvent(request);
+//    }
 
 }

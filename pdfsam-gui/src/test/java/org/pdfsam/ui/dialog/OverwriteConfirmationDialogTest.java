@@ -79,22 +79,22 @@ public class OverwriteConfirmationDialogTest extends ApplicationTest {
         clickOn(DefaultI18nContext.getInstance().i18n("Cancel"));
     }
 
-    @Test
-    @Category(NoHeadless.class)
-    public void cancel() {
-        this.overwrite = true;
-        clickOn("show");
-        clickOn(DefaultI18nContext.getInstance().i18n("Cancel"));
-        assertFalse(this.overwrite);
-    }
+//    @Test
+//    @Category(NoHeadless.class)
+//    public void cancel() {
+//        this.overwrite = true;
+//        clickOn("show");
+//        clickOn(DefaultI18nContext.getInstance().i18n("Cancel"));
+//        assertFalse(this.overwrite);
+//    }
 
-    @Test
-    public void overwrite() {
-        this.overwrite = false;
-        clickOn("show");
-        clickOn(DefaultI18nContext.getInstance().i18n("Overwrite"));
-        assertTrue(this.overwrite);
-    }
+//    @Test
+//    public void overwrite() {
+//        this.overwrite = false;
+//        clickOn("show");
+//        clickOn(DefaultI18nContext.getInstance().i18n("Overwrite"));
+//        assertTrue(this.overwrite);
+//    }
 
     @Test
     @Ignore

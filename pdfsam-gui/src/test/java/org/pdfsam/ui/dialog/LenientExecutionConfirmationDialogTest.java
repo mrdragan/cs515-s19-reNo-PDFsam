@@ -78,20 +78,20 @@ public class LenientExecutionConfirmationDialogTest extends ApplicationTest {
         clickOn(DefaultI18nContext.getInstance().i18n("No"));
     }
 
-    @Test
-    @Category(NoHeadless.class)
-    public void no() {
-        this.confirm = true;
-        clickOn("show");
-        clickOn(DefaultI18nContext.getInstance().i18n("No"));
-        assertFalse(this.confirm);
-    }
+//    @Test
+//    @Category(NoHeadless.class)
+//    public void no() {
+//        this.confirm = true;
+//        clickOn("show");
+//        clickOn(DefaultI18nContext.getInstance().i18n("No"));
+//        assertFalse(this.confirm);
+//    }
 
-    @Test
-    public void yes() {
-        this.confirm = false;
-        clickOn("show");
-        clickOn(DefaultI18nContext.getInstance().i18n("Yes"));
-        assertTrue(this.confirm);
-    }
+//    @Test
+//    public void yes() {
+//        this.confirm = false;
+//        clickOn("show");
+//        clickOn(DefaultI18nContext.getInstance().i18n("Yes"));
+//        assertTrue(this.confirm);
+//    }
 }

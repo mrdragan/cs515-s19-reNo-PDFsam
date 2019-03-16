@@ -115,7 +115,31 @@ public class MergeSelectionPaneTest {
         verify(builder).addInput(any());
         verify(onError).accept(eq("message"));
     }
-
+    
+    @Test
+    public void overlappingPageSelection() throws Exception {
+        populate();
+        when(builder.hasInput()).thenReturn(Boolean.TRUE);
+        victim.table().getItems().get(0).pageSelection.set("1-4,3-10");
+        victim.apply(builder, onError);
+        verify(onError, never()).accept(anyString());
+        ArgumentCaptor<PdfMergeInput> input = ArgumentCaptor.forClass(PdfMergeInput.class);
+        verify(builder).addInput(input.capture());
+        assertEquals(1, input.getValue().getPageSelection().size()); // should only be one because it creates union of other two
+    }
+    
+    @Test
+    public void nestedOverlapPageSelection() throws Exception {
+        populate();
+        when(builder.hasInput()).thenReturn(Boolean.TRUE);
+        victim.table().getItems().get(0).pageSelection.set("4-7, 3-10");
+        victim.apply(builder, onError);
+        verify(onError, never()).accept(anyString());
+        ArgumentCaptor<PdfMergeInput> input = ArgumentCaptor.forClass(PdfMergeInput.class);
+        verify(builder).addInput(input.capture());
+        assertEquals(1, input.getValue().getPageSelection().size());// should only be one because it creates union of other two
+    }
+    
     private void populate() throws Exception {
         File file = folder.newFile("temp.pdf");
         PdfLoadRequestEvent loadEvent = new PdfLoadRequestEvent(MODULE);

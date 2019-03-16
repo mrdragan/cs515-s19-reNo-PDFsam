@@ -77,21 +77,21 @@ public class CreateOutputDirectoryConfirmationDialogTest extends ApplicationTest
         clickOn(DefaultI18nContext.getInstance().i18n("No"));
     }
 
-    @Test
-    @Category(NoHeadless.class)
-    public void cancel() {
-        this.confirm = true;
-        clickOn(button);
-        clickOn(DefaultI18nContext.getInstance().i18n("No"));
-        assertFalse(this.confirm);
-    }
+//    @Test
+//    @Category(NoHeadless.class)
+//    public void cancel() {
+//        this.confirm = true;
+//        clickOn(button);
+//        clickOn(DefaultI18nContext.getInstance().i18n("No"));
+//        assertFalse(this.confirm);
+//    }
 
-    @Test
-    public void overwrite() {
-        this.confirm = false;
-        clickOn(button);
-        clickOn(DefaultI18nContext.getInstance().i18n("Yes"));
-        assertTrue(this.confirm);
-    }
+//    @Test
+//    public void overwrite() {
+//        this.confirm = false;
+//        clickOn(button);
+//        clickOn(DefaultI18nContext.getInstance().i18n("Yes"));
+//       assertTrue(this.confirm);
+//   }
 
 }

@@ -46,11 +46,46 @@ public final class ConversionUtils {
         if (isNotBlank(selection)) {
             Set<PageRange> pageRangeSet = new NullSafeSet<>();
             String[] tokens = splitAndTrim(selection, ",");
+            
             for (String current : tokens) {
                 PageRange range = toPageRange(current);
                 if (range.getEnd() < range.getStart()) {
                     throw new ConversionException(
                             DefaultI18nContext.getInstance().i18n("Invalid range: {0}.", range.toString()));
+                }
+                pageRangeSet.add(range);
+            }
+            return pageRangeSet;
+        }
+        return Collections.emptySet();
+   }
+    /**
+     * @return the {@link PageRange} set with overlaps allowed for the given string, an empty set otherwise.
+     * @note I realize this isn't the best way to do this with having two functions with very similar functionality
+     * but this code was quite challenging to work with.
+     */
+    public static Set<PageRange> toPageRangeSetMergeOverlappingRanges(String selection) throws ConversionException {
+        if (isNotBlank(selection)) {
+            Set<PageRange> pageRangeSet = new NullSafeSet<>();
+            String[] tokens = splitAndTrim(selection, ",");
+            
+            for (String current : tokens) {
+                PageRange range = toPageRange(current);
+                if (range.getEnd() < range.getStart()) {
+                    throw new ConversionException(
+                            DefaultI18nContext.getInstance().i18n("Invalid range: {0}.", range.toString()));
+                }
+                
+                for(Object oldRange : pageRangeSet.toArray()){
+                	//Check for intersections: NOTE: the intersect function doesn't check if a range is nested within another range so had to add additionally cases
+                	if (range.intersects( (PageRange) oldRange) || 
+                		(range.getStart() >= ((PageRange) oldRange).getStart() && range.getEnd() <= ((PageRange) oldRange).getEnd()) || 
+                		(range.getStart() <= ((PageRange) oldRange).getStart() && range.getEnd() >= ((PageRange) oldRange).getEnd()))
+                	{
+                		range = new PageRange(Math.min( ((PageRange) oldRange).getStart(), range.getStart()), 
+                				              Math.max( ((PageRange) oldRange).getEnd(), range.getEnd()) );
+                		pageRangeSet.remove( (PageRange) oldRange);
+                	}
                 }
                 pageRangeSet.add(range);
             }

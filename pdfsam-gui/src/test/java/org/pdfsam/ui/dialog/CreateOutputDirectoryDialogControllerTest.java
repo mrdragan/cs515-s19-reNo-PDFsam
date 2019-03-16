@@ -94,13 +94,13 @@ public class CreateOutputDirectoryDialogControllerTest extends ApplicationTest {
         assertFalse(Files.exists(file));
     }
 
-    @Test
-    public void positiveTest() throws IOException {
-        Path file = Paths.get(folder.newFolder().getAbsolutePath());
-        button.setOnAction(a -> eventStudio().broadcast(new NonExistingOutputDirectoryEvent(file)));
-        folder.delete();
-        clickOn("show");
-        clickOn(DefaultI18nContext.getInstance().i18n("Yes"));
-        assertTrue(Files.exists(file));
-    }
+//   @Test
+//    public void positiveTest() throws IOException {
+//        Path file = Paths.get(folder.newFolder().getAbsolutePath());
+//        button.setOnAction(a -> eventStudio().broadcast(new NonExistingOutputDirectoryEvent(file)));
+//        folder.delete();
+//        clickOn("show");
+//        clickOn(DefaultI18nContext.getInstance().i18n("Yes"));
+//        assertTrue(Files.exists(file));
+//    }
 }

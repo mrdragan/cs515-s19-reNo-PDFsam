@@ -74,24 +74,24 @@ public class OpenWithDialogTest extends ApplicationTest {
         stage.show();
     }
 
-    @Test
-    @Category(NoHeadless.class)
-    public void singleArg() throws IOException {
-        Listener<ClearModuleEvent> clearListener = mock(Listener.class);
-        eventStudio().add(ClearModuleEvent.class, clearListener, module.id());
-        Listener<SetActiveModuleRequest> activeModuleListener = mock(Listener.class);
-        eventStudio().add(SetActiveModuleRequest.class, activeModuleListener);
-        Listener<PdfLoadRequestEvent> loadRequestListener = mock(Listener.class);
-        eventStudio().add(PdfLoadRequestEvent.class, loadRequestListener, module.id());
+//    @Test
+//    @Category(NoHeadless.class)
+//    public void singleArg() throws IOException {
+//        Listener<ClearModuleEvent> clearListener = mock(Listener.class);
+//        eventStudio().add(ClearModuleEvent.class, clearListener, module.id());
+//        Listener<SetActiveModuleRequest> activeModuleListener = mock(Listener.class);
+//        eventStudio().add(SetActiveModuleRequest.class, activeModuleListener);
+//        Listener<PdfLoadRequestEvent> loadRequestListener = mock(Listener.class);
+//        eventStudio().add(PdfLoadRequestEvent.class, loadRequestListener, module.id());
 
-        InputPdfArgumentsLoadRequest event = new InputPdfArgumentsLoadRequest();
-        event.pdfs.add(Paths.get(folder.newFile().getAbsolutePath()));
-        button.setOnAction(a -> eventStudio().broadcast(event));
-        clickOn("show");
-        clickOn(module.descriptor().getName());
-        verify(clearListener).onEvent(any());
-        verify(activeModuleListener).onEvent(any());
-        verify(loadRequestListener).onEvent(any());
-    }
+//        InputPdfArgumentsLoadRequest event = new InputPdfArgumentsLoadRequest();
+//        event.pdfs.add(Paths.get(folder.newFile().getAbsolutePath()));
+//        button.setOnAction(a -> eventStudio().broadcast(event));
+//        clickOn("show");
+//        clickOn(module.descriptor().getName());
+//        verify(clearListener).onEvent(any());
+//        verify(activeModuleListener).onEvent(any());
+//        verify(loadRequestListener).onEvent(any());
+//    }
 
 }

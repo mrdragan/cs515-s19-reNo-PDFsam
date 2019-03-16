@@ -73,5 +73,9 @@ public final class SelectionTableRowData {
     public Set<PageRange> toPageRangeSet() throws ConversionException {
         return ConversionUtils.toPageRangeSet(pageSelection.get());
     }
+    
+    public Set<PageRange> toPageRangeSetMergeOverlappingRanges() throws ConversionException {
+        return ConversionUtils.toPageRangeSetMergeOverlappingRanges(pageSelection.get());
+    }
 
 }

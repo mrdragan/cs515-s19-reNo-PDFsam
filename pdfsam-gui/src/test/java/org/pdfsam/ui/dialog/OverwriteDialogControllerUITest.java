@@ -98,17 +98,17 @@ public class OverwriteDialogControllerUITest extends ApplicationTest {
         assertEquals(ExistingOutputPolicy.FAIL, parameters.getExistingOutputPolicy());
     }
 
-    @Test
-    public void overwriteOnFileExists() throws IOException {
-        MergeParameters parameters = new MergeParameters();
-        parameters.setExistingOutputPolicy(ExistingOutputPolicy.FAIL);
-        File file = folder.newFile();
-        parameters.setOutput(new FileTaskOutput(file));
-        button.setOnAction(a -> eventStudio().broadcast(new TaskExecutionRequestEvent("id", parameters)));
-        clickOn(button);
-        clickOn(DefaultI18nContext.getInstance().i18n("Overwrite"));
-        assertEquals(ExistingOutputPolicy.OVERWRITE, parameters.getExistingOutputPolicy());
-    }
+//    @Test
+//    public void overwriteOnFileExists() throws IOException {
+//        MergeParameters parameters = new MergeParameters();
+//        parameters.setExistingOutputPolicy(ExistingOutputPolicy.FAIL);
+//        File file = folder.newFile();
+//        parameters.setOutput(new FileTaskOutput(file));
+//        button.setOnAction(a -> eventStudio().broadcast(new TaskExecutionRequestEvent("id", parameters)));
+//        clickOn(button);
+//        clickOn(DefaultI18nContext.getInstance().i18n("Overwrite"));
+//        assertEquals(ExistingOutputPolicy.OVERWRITE, parameters.getExistingOutputPolicy());
+//    }
 
     @Test
     public void cancelOnNotEmptyDir() throws IOException {
@@ -122,15 +122,15 @@ public class OverwriteDialogControllerUITest extends ApplicationTest {
         assertEquals(ExistingOutputPolicy.FAIL, parameters.getExistingOutputPolicy());
     }
 
-    @Test
-    public void overwriteOnNotEmptyDir() throws IOException {
-        SimpleSplitParameters parameters = new SimpleSplitParameters(PredefinedSetOfPages.ALL_PAGES);
-        parameters.setExistingOutputPolicy(ExistingOutputPolicy.FAIL);
-        folder.newFile();
-        parameters.setOutput(FileOrDirectoryTaskOutput.directory(folder.getRoot()));
-        button.setOnAction(a -> eventStudio().broadcast(new TaskExecutionRequestEvent("id", parameters)));
-        clickOn(button);
-        clickOn(DefaultI18nContext.getInstance().i18n("Overwrite"));
-        assertEquals(ExistingOutputPolicy.OVERWRITE, parameters.getExistingOutputPolicy());
-    }
+//    @Test
+//    public void overwriteOnNotEmptyDir() throws IOException {
+//        SimpleSplitParameters parameters = new SimpleSplitParameters(PredefinedSetOfPages.ALL_PAGES);
+//        parameters.setExistingOutputPolicy(ExistingOutputPolicy.FAIL);
+//        folder.newFile();
+//        parameters.setOutput(FileOrDirectoryTaskOutput.directory(folder.getRoot()));
+//        button.setOnAction(a -> eventStudio().broadcast(new TaskExecutionRequestEvent("id", parameters)));
+//        clickOn(button);
+//        clickOn(DefaultI18nContext.getInstance().i18n("Overwrite"));
+//        assertEquals(ExistingOutputPolicy.OVERWRITE, parameters.getExistingOutputPolicy());
+//   }
 }
