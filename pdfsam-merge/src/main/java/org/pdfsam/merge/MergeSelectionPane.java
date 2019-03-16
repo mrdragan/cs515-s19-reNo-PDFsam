@@ -58,7 +58,7 @@ public class MergeSelectionPane extends MultipleSelectionPane
     public void apply(MergeParametersBuilder builder, Consumer<String> onError) {
         try {
             table().getItems().stream().filter(s -> !Objects.equals("0", trim(s.pageSelection.get())))
-                    .map(i -> new PdfMergeInput(i.descriptor().toPdfFileSource(), i.toPageRangeSet()))
+                    .map(i -> new PdfMergeInput(i.descriptor().toPdfFileSource(), i.toPageRangeSetMergeOverlappingRanges()))
                     .forEach(builder::addInput);
             if (!builder.hasInput()) {
                 onError.accept(DefaultI18nContext.getInstance().i18n("No PDF document has been selected"));
