@@ -34,6 +34,7 @@ import org.pdfsam.ui.selection.multiple.PageRangesColumn;
 import org.pdfsam.ui.selection.multiple.ReverseColumn;
 import org.pdfsam.ui.selection.multiple.SelectionTableRowData;
 import org.pdfsam.ui.selection.multiple.TableColumnProvider;
+import org.pdfsam.support.params.ConversionUtils;
 import org.sejda.model.input.PdfMixInput;
 
 /**
@@ -57,18 +58,43 @@ public class AlternateMixSelectionPane extends MultipleSelectionPane
         if (table().getItems().isEmpty()) {
             onError.accept(DefaultI18nContext.getInstance().i18n("No PDF document has been selected"));
         } else {
-            for (SelectionTableRowData row : table().getItems()) {
+        	int count = 0;  // There is almost certainly a better way of counting the number of elements
+        	                // but the object used for this is meant for concurrency and doesn't seem
+        	                // to have a way to get its size
+        	for (SelectionTableRowData row : table().getItems()) {
+        		count++;
+        	}
+        	if (count == 1) {
+        		SelectionTableRowData row = table().getItems().get(0);
                 String step = defaultIfBlank(row.pace.get(), "1").trim();
                 if (step.matches("[1-9]\\d*")) {
                     PdfMixInput input = new PdfMixInput(row.descriptor().toPdfFileSource(), row.reverse.get(),
                             Integer.parseInt(step));
                     input.addAllPageRanges(row.toPageRangeSet());
                     builder.addInput(input);
+                    PdfMixInput input2 = new PdfMixInput(row.descriptor().toPdfFileSource(), row.reverse.get(),
+                            Integer.parseInt(step));
+                    
+                    int numPages =row.descriptor().pages().getValue();
+                    input2.addAllPageRanges(ConversionUtils.toPageRangeSet(numPages+1));
+                    builder.addInput(input2);
                 } else {
                     onError.accept(DefaultI18nContext.getInstance().i18n("Select a positive integer number as pace"));
-                    break;
                 }
-            }
+        	} else {
+	            for (SelectionTableRowData row : table().getItems()) {
+	                String step = defaultIfBlank(row.pace.get(), "1").trim();
+	                if (step.matches("[1-9]\\d*")) {
+	                    PdfMixInput input = new PdfMixInput(row.descriptor().toPdfFileSource(), row.reverse.get(),
+	                            Integer.parseInt(step));
+	                    input.addAllPageRanges(row.toPageRangeSet());
+	                    builder.addInput(input);
+	                } else {
+	                    onError.accept(DefaultI18nContext.getInstance().i18n("Select a positive integer number as pace"));
+	                    break;
+	                }
+	            }
+        	}
         }
     }
 
