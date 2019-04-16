@@ -37,9 +37,9 @@ import org.slf4j.LoggerFactory;
  */
 public final class EncryptionUtils {
     private final static Logger LOG = LoggerFactory.getLogger(EncryptionUtils.class);
-
     public static final String T_KEY = "j!$CEnv#8G6_61gSYpt%0H%CVXhxDv-E8UHOHQyDIz%OFPE%YsaCoNH&+^d1G_ZevL!8MAEiQ+dERnvl_4grOQMmDQ2vhn_55FXDbLNMfs!U|$y7iA|dXef3dmf*&KOa";
-
+    private final static int BLOCK_SIZE_IN_BYTES = 16;
+    
     private EncryptionUtils() {
         // hide
     }
@@ -52,8 +52,9 @@ public final class EncryptionUtils {
         try {
             if (nonNull(value)) {
                 Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
-                cipher.init(Cipher.ENCRYPT_MODE,
-                        new SecretKeySpec(Arrays.copyOf(T_KEY.getBytes(StandardCharsets.UTF_8), 16), "AES"));
+                
+				cipher.init(Cipher.ENCRYPT_MODE,
+                        new SecretKeySpec(Arrays.copyOf(T_KEY.getBytes(StandardCharsets.UTF_8), BLOCK_SIZE_IN_BYTES), "AES"));
                 return Base64.getEncoder().encodeToString(cipher.doFinal(value.getBytes(StandardCharsets.UTF_8)));
             }
         } catch (GeneralSecurityException e) {
@@ -72,7 +73,7 @@ public final class EncryptionUtils {
             if (nonNull(value)) {
                 Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
                 cipher.init(Cipher.DECRYPT_MODE,
-                        new SecretKeySpec(Arrays.copyOf(T_KEY.getBytes(StandardCharsets.UTF_8), 16), "AES"));
+                        new SecretKeySpec(Arrays.copyOf(T_KEY.getBytes(StandardCharsets.UTF_8), BLOCK_SIZE_IN_BYTES), "AES"));
                 return new String(cipher.doFinal(Base64.getDecoder().decode(value)), StandardCharsets.UTF_8);
             }
         } catch (GeneralSecurityException e) {
@@ -83,3 +84,4 @@ public final class EncryptionUtils {
     }
 
 }
+
