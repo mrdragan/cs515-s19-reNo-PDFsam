@@ -64,6 +64,7 @@ public final class ConversionUtils {
      * @note I realize this isn't the best way to do this with having two functions with very similar functionality
      * but this code was quite challenging to work with.
      */
+    
     public static Set<PageRange> toPageRangeSetMergeOverlappingRanges(String selection) throws ConversionException {
         if (isNotBlank(selection)) {
             Set<PageRange> pageRangeSet = new NullSafeSet<>();
@@ -78,9 +79,7 @@ public final class ConversionUtils {
                 
                 for(Object oldRange : pageRangeSet.toArray()){
                 	//Check for intersections: NOTE: the intersect function doesn't check if a range is nested within another range so had to add additionally cases
-                	if (range.intersects( (PageRange) oldRange) || 
-                		(range.getStart() >= ((PageRange) oldRange).getStart() && range.getEnd() <= ((PageRange) oldRange).getEnd()) || 
-                		(range.getStart() <= ((PageRange) oldRange).getStart() && range.getEnd() >= ((PageRange) oldRange).getEnd()))
+                	if (range.intersects( (PageRange) oldRange) || isNested(range, (PageRange) oldRange))
                 	{
                 		range = new PageRange(Math.min( ((PageRange) oldRange).getStart(), range.getStart()), 
                 				              Math.max( ((PageRange) oldRange).getEnd(), range.getEnd()) );
@@ -93,7 +92,11 @@ public final class ConversionUtils {
         }
         return Collections.emptySet();
     }
-    
+    private static boolean isNested(PageRange range, PageRange oldRange ) {
+    	return  (range.getStart() >= ((PageRange) oldRange).getStart() && range.getEnd() <= ((PageRange) oldRange).getEnd()) || 
+        		(range.getStart() <= ((PageRange) oldRange).getStart() && range.getEnd() >= ((PageRange) oldRange).getEnd());
+    }
+ 
     public static Set<PageRange> toPageRangeSet(int selection) throws ConversionException {
         return toPageRangeSet(Integer.toString(selection));
     }
@@ -126,3 +129,4 @@ public final class ConversionUtils {
         }
     }
 }
+
