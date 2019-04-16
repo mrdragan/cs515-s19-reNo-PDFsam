@@ -73,7 +73,11 @@ class TooltippedTextFieldTableCell extends TableCell<SelectionTableRowData, Stri
         setGraphic(textField);
         setContentDisplay(ContentDisplay.TEXT_ONLY);
 
-        textField.setOnAction(evt -> {
+        addActionEventsToTextField();
+    }
+    
+    private void addActionEventsToTextField() {
+    	textField.setOnAction(evt -> {
             commitEdit(this.converter.fromString(textField.getText()));
         });
         textField.focusedProperty().addListener((obs, wasFocused, isNowFocused) -> {
@@ -136,3 +140,4 @@ class TooltippedTextFieldTableCell extends TableCell<SelectionTableRowData, Stri
         setContentDisplay(ContentDisplay.TEXT_ONLY);
     }
 }
+
