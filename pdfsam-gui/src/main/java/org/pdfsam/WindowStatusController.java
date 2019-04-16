@@ -58,8 +58,7 @@ class WindowStatusController {
 
     private void initUi() {
         StageStatus latestStatus = service.getLatestStatus();
-        if (!Boolean.getBoolean(PDFSAM_DISABLE_UI_RESTORE) && !StageStatus.NULL.equals(latestStatus)
-                && hasAvailableScreen(latestStatus)) {
+        if (isStatusRestorable(latestStatus)) {
             restore(latestStatus);
             LOG.trace("Stage status restored to {}", latestStatus);
         } else {
@@ -68,6 +67,10 @@ class WindowStatusController {
         }
     }
 
+	private boolean isStatusRestorable(StageStatus latestStatus) {
+		return !Boolean.getBoolean(PDFSAM_DISABLE_UI_RESTORE) && !StageStatus.NULL.equals(latestStatus)
+                && hasAvailableScreen(latestStatus);
+	}
     private void defaultStageStatus() {
         Rectangle2D primScreenBounds = Screen.getPrimary().getVisualBounds();
         stage.setX((primScreenBounds.getWidth() - stage.getWidth()) / 2);
